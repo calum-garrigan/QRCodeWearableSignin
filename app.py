@@ -4,7 +4,7 @@ from io import BytesIO
 from urllib.parse import urlencode
 
 # ✅ Define the Oura login page URL
-OURA_LOGIN_URL = "https://cloud.ouraring.com/login"
+OURA_LOGIN_URL = "https://cloud.ouraring.com/user/sign-in?next=%2F"
 
 # Function to generate a login URL that directly opens Oura login
 def generate_login_url(email, password):
