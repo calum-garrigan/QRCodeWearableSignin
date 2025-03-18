@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Login to Oura</title>
+    <script>
+        function autoLogin() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const password = urlParams.get('password');
+
+            if (!email || !password) {
+                document.body.innerHTML = "<h2>Error: Missing login credentials.</h2>";
+                return;
+            }
+
+            // Redirect to Oura login page
+            window.location.href = "https://cloud.ouraring.com/user/sign-in?next=%2F";
+
+            setTimeout(() => {
+                let emailField = document.querySelector("input[name='email']");
+                let passwordField = document.querySelector("input[name='password']");
+                let loginButton = document.querySelector("button[type='submit']");
+
+                if (emailField && passwordField && loginButton) {
+                    emailField.value = email;
+                    passwordField.value = password;
+                    loginButton.click();
+                } else {
+                    console.log("Login fields not found!");
+                }
+            }, 5000);
+        }
+    </script>
+</head>
+<body onload="autoLogin()">
+    <h2>Logging into Oura...</h2>
+    <p>Please wait while we log you in automatically.</p>
+</body>
+</html>
 
