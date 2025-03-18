@@ -3,13 +3,13 @@ import qrcode
 from io import BytesIO
 from urllib.parse import urlencode
 
-# ✅ Update this with your live Streamlit URL
-STREAMLIT_APP_URL = "https://gsqi4sxeux8pwrmqyzuuwv.streamlit.app/login"
+# ✅ Define the Oura login page URL
+OURA_LOGIN_URL = "https://cloud.ouraring.com/login"
 
-# Function to generate the QR login URL
+# Function to generate a login URL that directly opens Oura login
 def generate_login_url(email, password):
     params = urlencode({"email": email, "password": password})
-    return f"{STREAMLIT_APP_URL}?{params}"
+    return f"{OURA_LOGIN_URL}?{params}"
 
 # Function to generate a QR code
 def generate_qr_code(data):
@@ -22,7 +22,7 @@ def generate_qr_code(data):
 st.title("Oura QR Code Auto-Login Generator")
 st.write("Generate QR codes for soldiers to scan and log in automatically.")
 
-# Sample accounts (can be replaced with actual data)
+# Sample soldier accounts (Replace these with real accounts)
 soldier_accounts = [
     ("soldier001@ouraring.com", "Password001"),
     ("soldier002@ouraring.com", "Password002"),
@@ -34,6 +34,6 @@ for email, password in soldier_accounts:
     login_url = generate_login_url(email, password)
     qr_image = generate_qr_code(login_url)
     
-    st.write(f"QR Code for {email}:")
+    st.write(f"QR Code for [{email}](mailto:{email}):")
     st.image(qr_image, caption="Scan this QR code to log in", use_column_width=False)
-    st.markdown(f"[Direct Login Link]({login_url})")  # Fallback if QR scanning fails
+    st.markdown(f"**[Direct Login Link]({login_url})**")  # Fallback if QR scanning fails
