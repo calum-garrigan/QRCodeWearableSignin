@@ -9,7 +9,7 @@ password = query_params.get("password", [""])[0]
 st.title("Logging into Oura...")
 
 if email and password:
-    # ✅ Inject JavaScript to fill in login fields
+    # ✅ Redirect to Oura login page with JavaScript to auto-fill credentials
     login_script = f"""
     <script>
         setTimeout(() => {{
@@ -22,10 +22,10 @@ if email and password:
             }} else {{
                 console.log("❌ Login fields not found!");
             }}
-        }}, 2000);
+        }}, 3000);
     </script>
-    <p>Redirecting to Oura Login...</p>
-    <meta http-equiv="refresh" content="2; URL='https://cloud.ouraring.com/user/sign-in?next=%2F'" />
+    <meta http-equiv="refresh" content="3; URL='https://cloud.ouraring.com/user/sign-in?next=%2F'" />
+    <p>Redirecting to Oura Login in 3 seconds...</p>
     """
     st.markdown(login_script, unsafe_allow_html=True)
 else:
