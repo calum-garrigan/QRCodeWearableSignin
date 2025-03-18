@@ -1,41 +1,32 @@
 import streamlit as st
-import qrcode
-from io import BytesIO
-from urllib.parse import urlencode
+from urllib.parse import parse_qs, urlparse
 
-# Base URL for the Streamlit-hosted login page
-STREAMLIT_APP_URL = "https://your-username-streamlit-app.streamlit.app/login"
+# Extract email and password from the URL parameters
+query_params = parse_qs(urlparse(st.query_params).query)
+email = query_params.get("email", [""])[0]
+password = query_params.get("password", [""])[0]
 
+st.title("Logging into Oura...")
 
-# Function to generate a login URL
-def generate_login_url(email, password):
-    params = urlencode({"email": email, "password": password})
-    return f"{STREAMLIT_APP_URL}?{params}"
-
-
-# Function to generate a QR code
-def generate_qr_code(data):
-    qr = qrcode.make(data)
-    img_bytes = BytesIO()
-    qr.save(img_bytes, format="PNG")
-    return img_bytes.getvalue()
-
-
-# Streamlit UI
-st.title("Oura QR Code Auto-Login Generator")
-st.write("Generate QR codes for soldiers to scan and log in automatically.")
-
-# Predefined soldier login accounts
-soldier_accounts = [
-    ("soldier001@ouraring.com", "Password001"),
-    ("soldier002@ouraring.com", "Password002"),
-    ("soldier003@ouraring.com", "Password003"),
-]
-
-# Generate QR codes for each soldier
-for email, password in soldier_accounts:
-    login_url = generate_login_url(email, password)
-    qr_image = generate_qr_code(login_url)
-
-    st.write(f"QR Code for {email}:")
-    st.image(qr_image, caption="Scan this QR code to log in", use_column_width=False)
+if email and password:
+    # ✅ Inject JavaScript to fill in login fields
+    login_script = f"""
+    <script>
+        setTimeout(() => {{
+            var emailField = document.querySelector("input[name='email']");
+            var passwordField = document.querySelector("input[name='password']");
+            if (emailField && passwordField) {{
+                emailField.value = "{email}";
+                passwordField.value = "{password}";
+                console.log("✅ Auto-filled credentials!");
+            }} else {{
+                console.log("❌ Login fields not found!");
+            }}
+        }}, 2000);
+    </script>
+    <p>Redirecting to Oura Login...</p>
+    <meta http-equiv="refresh" content="2; URL='https://cloud.ouraring.com/user/sign-in?next=%2F'" />
+    """
+    st.markdown(login_script, unsafe_allow_html=True)
+else:
+    st.error("Invalid login credentials. Please try again.")
