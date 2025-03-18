@@ -3,7 +3,7 @@ import qrcode
 from io import BytesIO
 from urllib.parse import urlencode
 
-# ✅ Replace with your Streamlit-hosted JavaScript auto-login page
+# ✅ This should point to autologin.py, not app.py
 AUTO_LOGIN_PAGE_URL = "https://gsqi4sxeux8pwrmqyzuuwv.streamlit.app/autologin"
 
 # Function to generate the login URL
