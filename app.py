@@ -35,5 +35,5 @@ for email, password in soldier_accounts:
     qr_image = generate_qr_code(login_url)
     
     st.write(f"QR Code for [{email}](mailto:{email}):")
-    st.image(qr_image, caption="Scan this QR code to log in", use_column_width=False)
+    st.image(qr_image, caption="Scan this QR code to log in", use_container_width=True)  # ✅ FIXED
     st.markdown(f"**[Direct Login Link]({login_url})**")  # Fallback if QR scanning fails
