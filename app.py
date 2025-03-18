@@ -3,13 +3,13 @@ import qrcode
 from io import BytesIO
 from urllib.parse import urlencode
 
-# ✅ Update this with your live Streamlit login URL
-STREAMLIT_LOGIN_URL = "https://gsqi4sxeux8pwrmqyzuuwv.streamlit.app/login"
+# ✅ Replace with your Streamlit-hosted JavaScript auto-login page
+AUTO_LOGIN_PAGE_URL = "https://gsqi4sxeux8pwrmqyzuuwv.streamlit.app/autologin"
 
-# Function to generate login URL with email and password parameters
+# Function to generate the login URL
 def generate_login_url(email, password):
     params = urlencode({"email": email, "password": password})
-    return f"{STREAMLIT_LOGIN_URL}?{params}"
+    return f"{AUTO_LOGIN_PAGE_URL}?{params}"
 
 # Function to generate a QR code
 def generate_qr_code(data):
@@ -20,7 +20,7 @@ def generate_qr_code(data):
 
 # Streamlit UI
 st.title("Oura QR Code Auto-Login Generator")
-st.write("Scan the QR code to auto-login to Oura.")
+st.write("Scan the QR code to auto-login to Oura (No typing required).")
 
 # User inputs
 email = st.text_input("Enter Oura Email", value="testuser@example.com")
@@ -34,4 +34,4 @@ if st.button("Generate QR Code"):
     st.image(qr_image, caption="Scan this QR code to log in", use_container_width=True)
 
     # Direct link as a backup
-    st.markdown(f"[Click here to log in manually]({login_url})")
+    st.markdown(f"[Click here to log in automatically]({login_url})")
