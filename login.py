@@ -15,16 +15,19 @@ if email and password:
         setTimeout(() => {{
             let emailField = document.querySelector("input[name='email']");
             let passwordField = document.querySelector("input[name='password']");
-            if (emailField && passwordField) {{
+            let loginButton = document.querySelector("button[type='submit']");
+
+            if (emailField && passwordField && loginButton) {{
                 emailField.value = "{email}";
                 passwordField.value = "{password}";
-                document.querySelector("button[type='submit']").click();  // Click Login Button
+                loginButton.click();  // Automatically click login button
+                console.log("✅ Auto-login triggered!");
             }} else {{
                 console.log("❌ Login fields not found!");
             }}
         }}, 3000);
     </script>
-    <meta http-equiv="refresh" content="2; URL='https://cloud.ouraring.com/user/sign-in?next=%2F'" />
+    <meta http-equiv="refresh" content="3; URL='https://cloud.ouraring.com/user/sign-in?next=%2F'" />
     <p>Auto-filling login details... Redirecting to Oura...</p>
     """
     st.markdown(login_script, unsafe_allow_html=True)
